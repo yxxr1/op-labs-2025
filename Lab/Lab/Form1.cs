@@ -12,7 +12,11 @@ namespace Lab
             this.Airport = new Airport();
         }
 
-        private void Form1_Load(object sender, EventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            editListBox.DataSource = this.Airport.Planes;
+            editListBox.DisplayMember = "FlightId";
+        }
 
         private void outputFlights()
         {
@@ -29,28 +33,41 @@ namespace Lab
 
             outputTextBox.Text = text;
             outputTextBox.ForeColor = Airport.OutputColor;
+
+            editListBox.DataSource = null;
+            editListBox.DataSource = this.Airport.Planes;
+            editListBox.DisplayMember = "FlightId";
         }
-        private void clearForm() {
+        private void clearForm()
+        {
             this.flightIdTextBox.Text = "";
             this.companyNameTextBox.Text = "";
             this.destinationTextBox.Text = "";
             this.departureDateTimePicker.Value = DateTime.Now;
             this.priceNumericUpDown.Value = 1;
+            this.photoOpenFileDialog.FileName = "";
+            this.pictureBox.Image = null;
+            this.photoButton.ForeColor = Color.Black;
         }
 
-        private void refreshButton_Click(object sender, EventArgs e) {
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
             this.outputFlights();
         }
 
         private void addFlightButton_Click(object sender, EventArgs e)
         {
-            if (this.destinationTextBox.Text != "") {
+            if (this.destinationTextBox.Text != "" && this.photoOpenFileDialog.FileName != "")
+            {
                 Plane plane;
 
-                if (this.flightIdTextBox.Text != "" && this.companyNameTextBox.Text != "") {
-                     plane = new Plane(this.flightIdTextBox.Text, this.companyNameTextBox.Text, this.destinationTextBox.Text, this.departureDateTimePicker.Value, (int)this.priceNumericUpDown.Value);
-                } else {
-                    plane = new Plane(this.destinationTextBox.Text, this.departureDateTimePicker.Value, (int)this.priceNumericUpDown.Value);
+                if (this.flightIdTextBox.Text != "" && this.companyNameTextBox.Text != "")
+                {
+                    plane = new Plane(this.flightIdTextBox.Text, this.companyNameTextBox.Text, this.destinationTextBox.Text, this.departureDateTimePicker.Value, (int)this.priceNumericUpDown.Value, this.photoOpenFileDialog.FileName);
+                }
+                else
+                {
+                    plane = new Plane(this.destinationTextBox.Text, this.departureDateTimePicker.Value, (int)this.priceNumericUpDown.Value, this.photoOpenFileDialog.FileName);
                 }
 
                 this.Airport.Planes.Add(plane);
@@ -60,13 +77,53 @@ namespace Lab
             }
         }
 
-        private void testButton_Click(object sender, EventArgs e) {
-            string text = "";
+        private void resetDataBindings()
+        {
+            this.flightIdTextBox.DataBindings.Clear();
+            this.companyNameTextBox.DataBindings.Clear();
+            this.destinationTextBox.DataBindings.Clear();
+            this.departureDateTimePicker.DataBindings.Clear();
+            this.priceNumericUpDown.DataBindings.Clear();
+        }
 
-            text += "ToString(): \n" + this.Airport.ToString()
-                + "\n\nGetHashCode(): \n" + this.Airport.GetHashCode();
+        private void setDataBindings(Plane item)
+        {
+            this.flightIdTextBox.DataBindings.Add("Text", item, "FlightId");
+            this.companyNameTextBox.DataBindings.Add("Text", item, "CompanyName");
+            this.destinationTextBox.DataBindings.Add("Text", item, "Destination");
+            this.departureDateTimePicker.DataBindings.Add("Value", item, "DepartureDateTime");
+            this.priceNumericUpDown.DataBindings.Add("Value", item, "FlightPrice");
+        }
 
-            outputTextBox.Text = text;
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            this.resetDataBindings();
+            this.clearForm();
+            this.addFlightButton.Enabled = true;
+            this.photoButton.Enabled = true;
+        }
+
+        private void editButton_Click(object sender, EventArgs e)
+        {
+            if (this.editListBox.SelectedItem != null)
+            {
+                this.addFlightButton.Enabled = false;
+                this.photoButton.Enabled = false;
+                this.resetDataBindings();
+
+                Plane selectedItem = (Plane)this.editListBox.SelectedItem;
+
+                this.setDataBindings(selectedItem);
+                selectedItem.ShowPhoto(this.pictureBox);
+            }
+        }
+
+        private void photoButton_Click(object sender, EventArgs e)
+        {
+            if (this.photoOpenFileDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                this.photoButton.ForeColor = Color.Green;
+            }
         }
     }
 }

@@ -42,9 +42,15 @@
             departureDateTimePicker = new DateTimePicker();
             priceNumericUpDown = new NumericUpDown();
             addFlightButton = new Button();
-            testButton = new Button();
+            editListBox = new ListBox();
+            resetButton = new Button();
+            editButton = new Button();
+            pictureBox = new PictureBox();
+            photoButton = new Button();
+            photoOpenFileDialog = new OpenFileDialog();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
@@ -52,7 +58,7 @@
             groupBox1.Controls.Add(outputTextBox);
             groupBox1.Location = new Point(390, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(398, 372);
+            groupBox1.Size = new Size(398, 402);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Рейсы";
@@ -61,13 +67,13 @@
             // 
             outputTextBox.Location = new Point(6, 22);
             outputTextBox.Name = "outputTextBox";
-            outputTextBox.Size = new Size(386, 344);
+            outputTextBox.Size = new Size(386, 374);
             outputTextBox.TabIndex = 0;
             outputTextBox.Text = "";
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(390, 390);
+            refreshButton.Location = new Point(390, 420);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(398, 48);
             refreshButton.TabIndex = 2;
@@ -160,7 +166,7 @@
             // 
             // addFlightButton
             // 
-            addFlightButton.Location = new Point(128, 191);
+            addFlightButton.Location = new Point(128, 223);
             addFlightButton.Name = "addFlightButton";
             addFlightButton.Size = new Size(256, 31);
             addFlightButton.TabIndex = 13;
@@ -168,22 +174,63 @@
             addFlightButton.UseVisualStyleBackColor = true;
             addFlightButton.Click += addFlightButton_Click;
             // 
-            // testButton
+            // editListBox
             // 
-            testButton.Location = new Point(247, 390);
-            testButton.Name = "testButton";
-            testButton.Size = new Size(137, 48);
-            testButton.TabIndex = 14;
-            testButton.Text = "Методы Object";
-            testButton.UseVisualStyleBackColor = true;
-            testButton.Click += testButton_Click;
+            editListBox.FormattingEnabled = true;
+            editListBox.ItemHeight = 15;
+            editListBox.Location = new Point(128, 260);
+            editListBox.Name = "editListBox";
+            editListBox.Size = new Size(256, 154);
+            editListBox.TabIndex = 14;
+            // 
+            // resetButton
+            // 
+            resetButton.Location = new Point(12, 223);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(110, 31);
+            resetButton.TabIndex = 15;
+            resetButton.Text = "Сброс";
+            resetButton.UseVisualStyleBackColor = true;
+            resetButton.Click += resetButton_Click;
+            // 
+            // editButton
+            // 
+            editButton.Location = new Point(128, 420);
+            editButton.Name = "editButton";
+            editButton.Size = new Size(256, 48);
+            editButton.TabIndex = 16;
+            editButton.Text = "Редактировать";
+            editButton.UseVisualStyleBackColor = true;
+            editButton.Click += editButton_Click;
+            // 
+            // pictureBox
+            // 
+            pictureBox.Location = new Point(12, 260);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new Size(110, 154);
+            pictureBox.TabIndex = 17;
+            pictureBox.TabStop = false;
+            // 
+            // photoButton
+            // 
+            photoButton.Location = new Point(128, 179);
+            photoButton.Name = "photoButton";
+            photoButton.Size = new Size(96, 29);
+            photoButton.TabIndex = 18;
+            photoButton.Text = "Выбрать фото";
+            photoButton.UseVisualStyleBackColor = true;
+            photoButton.Click += photoButton_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(testButton);
+            ClientSize = new Size(800, 479);
+            Controls.Add(photoButton);
+            Controls.Add(pictureBox);
+            Controls.Add(editButton);
+            Controls.Add(resetButton);
+            Controls.Add(editListBox);
             Controls.Add(addFlightButton);
             Controls.Add(priceNumericUpDown);
             Controls.Add(departureDateTimePicker);
@@ -202,6 +249,7 @@
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -221,6 +269,11 @@
         private DateTimePicker departureDateTimePicker;
         private NumericUpDown priceNumericUpDown;
         private Button addFlightButton;
-        private Button testButton;
+        private ListBox editListBox;
+        private Button resetButton;
+        private Button editButton;
+        private PictureBox pictureBox;
+        private Button photoButton;
+        private OpenFileDialog photoOpenFileDialog;
     }
 }
