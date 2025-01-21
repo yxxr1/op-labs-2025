@@ -28,6 +28,7 @@ namespace Lab
             }
 
             outputTextBox.Text = text;
+            outputTextBox.ForeColor = Airport.OutputColor;
         }
         private void clearForm() {
             this.flightIdTextBox.Text = "";
@@ -43,14 +44,14 @@ namespace Lab
 
         private void addFlightButton_Click(object sender, EventArgs e)
         {
-            if (this.flightIdTextBox.Text != "" && this.companyNameTextBox.Text != "" && this.destinationTextBox.Text != "") {
-                Plane plane = new Plane() {
-                    FlightId = this.flightIdTextBox.Text,
-                    CompanyName = this.companyNameTextBox.Text,
-                    Destination = this.destinationTextBox.Text,
-                    DepartureDateTime = this.departureDateTimePicker.Value,
-                    FlightPrice = (int)this.priceNumericUpDown.Value
-                };
+            if (this.destinationTextBox.Text != "") {
+                Plane plane;
+
+                if (this.flightIdTextBox.Text != "" && this.companyNameTextBox.Text != "") {
+                     plane = new Plane(this.flightIdTextBox.Text, this.companyNameTextBox.Text, this.destinationTextBox.Text, this.departureDateTimePicker.Value, (int)this.priceNumericUpDown.Value);
+                } else {
+                    plane = new Plane(this.destinationTextBox.Text, this.departureDateTimePicker.Value, (int)this.priceNumericUpDown.Value);
+                }
 
                 this.Airport.Planes.Add(plane);
 
