@@ -48,6 +48,10 @@
             pictureBox = new PictureBox();
             photoButton = new Button();
             photoOpenFileDialog = new OpenFileDialog();
+            openFileDialog = new OpenFileDialog();
+            saveFileDialog = new SaveFileDialog();
+            fileSaveButton = new Button();
+            fileLoadButton = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -55,6 +59,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(fileLoadButton);
+            groupBox1.Controls.Add(fileSaveButton);
             groupBox1.Controls.Add(outputTextBox);
             groupBox1.Location = new Point(390, 12);
             groupBox1.Name = "groupBox1";
@@ -67,7 +73,7 @@
             // 
             outputTextBox.Location = new Point(6, 22);
             outputTextBox.Name = "outputTextBox";
-            outputTextBox.Size = new Size(386, 374);
+            outputTextBox.Size = new Size(386, 327);
             outputTextBox.TabIndex = 0;
             outputTextBox.Text = "";
             // 
@@ -221,11 +227,31 @@
             photoButton.UseVisualStyleBackColor = true;
             photoButton.Click += photoButton_Click;
             // 
+            // fileSaveButton
+            // 
+            fileSaveButton.Location = new Point(6, 355);
+            fileSaveButton.Name = "fileSaveButton";
+            fileSaveButton.Size = new Size(190, 39);
+            fileSaveButton.TabIndex = 1;
+            fileSaveButton.Text = "Сохранить в файл";
+            fileSaveButton.UseVisualStyleBackColor = true;
+            fileSaveButton.Click += fileSaveButton_Click;
+            // 
+            // fileLoadButton
+            // 
+            fileLoadButton.Location = new Point(202, 355);
+            fileLoadButton.Name = "fileLoadButton";
+            fileLoadButton.Size = new Size(190, 39);
+            fileLoadButton.TabIndex = 2;
+            fileLoadButton.Text = "Загрузить из файла";
+            fileLoadButton.UseVisualStyleBackColor = true;
+            fileLoadButton.Click += fileLoadButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 479);
+            ClientSize = new Size(800, 480);
             Controls.Add(photoButton);
             Controls.Add(pictureBox);
             Controls.Add(editButton);
@@ -275,5 +301,9 @@
         private PictureBox pictureBox;
         private Button photoButton;
         private OpenFileDialog photoOpenFileDialog;
+        private OpenFileDialog openFileDialog;
+        private SaveFileDialog saveFileDialog;
+        private Button fileLoadButton;
+        private Button fileSaveButton;
     }
 }

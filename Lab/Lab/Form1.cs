@@ -22,14 +22,7 @@ namespace Lab
         {
             string text = "";
 
-            for (int i = 0; i < this.Airport.Planes.Count; i++)
-            {
-                Plane plane = this.Airport.Planes[i];
-                text += "Рейс \"" + plane.FlightId + "\" компании \"" + plane.CompanyName
-                    + "\":\nПункт назначения: " + plane.Destination
-                    + "\nДата и время отправления: " + plane.DepartureDateTime.ToString()
-                    + "\nСтоимость: " + plane.FlightPrice + "\n\n";
-            }
+            this.Airport.GetText(ref text);
 
             outputTextBox.Text = text;
             outputTextBox.ForeColor = Airport.OutputColor;
@@ -124,6 +117,18 @@ namespace Lab
             {
                 this.photoButton.ForeColor = Color.Green;
             }
+        }
+
+        private void fileSaveButton_Click(object sender, EventArgs e)
+        {
+            this.Airport.WriteToFile(this.saveFileDialog);
+        }
+
+        private void fileLoadButton_Click(object sender, EventArgs e)
+        {
+            this.Airport.ReadFromFile(this.openFileDialog);
+            this.outputFlights();
+            this.clearForm();
         }
     }
 }
