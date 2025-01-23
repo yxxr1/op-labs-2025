@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            fileLoadButton = new Button();
+            fileSaveButton = new Button();
             outputTextBox = new RichTextBox();
             refreshButton = new Button();
             flightIdTextBox = new TextBox();
@@ -50,11 +52,18 @@
             photoOpenFileDialog = new OpenFileDialog();
             openFileDialog = new OpenFileDialog();
             saveFileDialog = new SaveFileDialog();
-            fileSaveButton = new Button();
-            fileLoadButton = new Button();
+            planeTypeLabel = new Label();
+            planeSpecPassengerLabel = new Label();
+            passengerTypeRadioButton = new RadioButton();
+            cargoTypeRadioButton = new RadioButton();
+            planeSpecNumericUpDown = new NumericUpDown();
+            planeSpecCargoLabel = new Label();
+            photoGroupBox = new GroupBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)planeSpecNumericUpDown).BeginInit();
+            photoGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -64,22 +73,42 @@
             groupBox1.Controls.Add(outputTextBox);
             groupBox1.Location = new Point(390, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(398, 402);
+            groupBox1.Size = new Size(398, 456);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Рейсы";
+            // 
+            // fileLoadButton
+            // 
+            fileLoadButton.Location = new Point(202, 411);
+            fileLoadButton.Name = "fileLoadButton";
+            fileLoadButton.Size = new Size(190, 39);
+            fileLoadButton.TabIndex = 2;
+            fileLoadButton.Text = "Загрузить из файла";
+            fileLoadButton.UseVisualStyleBackColor = true;
+            fileLoadButton.Click += fileLoadButton_Click;
+            // 
+            // fileSaveButton
+            // 
+            fileSaveButton.Location = new Point(6, 411);
+            fileSaveButton.Name = "fileSaveButton";
+            fileSaveButton.Size = new Size(190, 39);
+            fileSaveButton.TabIndex = 1;
+            fileSaveButton.Text = "Сохранить в файл";
+            fileSaveButton.UseVisualStyleBackColor = true;
+            fileSaveButton.Click += fileSaveButton_Click;
             // 
             // outputTextBox
             // 
             outputTextBox.Location = new Point(6, 22);
             outputTextBox.Name = "outputTextBox";
-            outputTextBox.Size = new Size(386, 327);
+            outputTextBox.Size = new Size(386, 383);
             outputTextBox.TabIndex = 0;
             outputTextBox.Text = "";
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(390, 420);
+            refreshButton.Location = new Point(390, 474);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(398, 48);
             refreshButton.TabIndex = 2;
@@ -89,15 +118,15 @@
             // 
             // flightIdTextBox
             // 
-            flightIdTextBox.Location = new Point(128, 34);
+            flightIdTextBox.Location = new Point(176, 34);
             flightIdTextBox.Name = "flightIdTextBox";
-            flightIdTextBox.Size = new Size(256, 23);
+            flightIdTextBox.Size = new Size(208, 23);
             flightIdTextBox.TabIndex = 3;
             // 
             // flightIdLabel
             // 
             flightIdLabel.AutoSize = true;
-            flightIdLabel.Location = new Point(68, 37);
+            flightIdLabel.Location = new Point(116, 37);
             flightIdLabel.Name = "flightIdLabel";
             flightIdLabel.Size = new Size(54, 15);
             flightIdLabel.TabIndex = 4;
@@ -106,7 +135,7 @@
             // companyNameLabel
             // 
             companyNameLabel.AutoSize = true;
-            companyNameLabel.Location = new Point(56, 66);
+            companyNameLabel.Location = new Point(104, 66);
             companyNameLabel.Name = "companyNameLabel";
             companyNameLabel.Size = new Size(66, 15);
             companyNameLabel.TabIndex = 5;
@@ -115,7 +144,7 @@
             // destinationLabel
             // 
             destinationLabel.AutoSize = true;
-            destinationLabel.Location = new Point(12, 95);
+            destinationLabel.Location = new Point(60, 95);
             destinationLabel.Name = "destinationLabel";
             destinationLabel.Size = new Size(110, 15);
             destinationLabel.TabIndex = 6;
@@ -124,7 +153,7 @@
             // dateTimeLabel
             // 
             dateTimeLabel.AutoSize = true;
-            dateTimeLabel.Location = new Point(40, 121);
+            dateTimeLabel.Location = new Point(88, 121);
             dateTimeLabel.Name = "dateTimeLabel";
             dateTimeLabel.Size = new Size(82, 15);
             dateTimeLabel.TabIndex = 7;
@@ -133,7 +162,7 @@
             // priceLabel
             // 
             priceLabel.AutoSize = true;
-            priceLabel.Location = new Point(52, 150);
+            priceLabel.Location = new Point(100, 152);
             priceLabel.Name = "priceLabel";
             priceLabel.Size = new Size(70, 15);
             priceLabel.TabIndex = 8;
@@ -141,28 +170,28 @@
             // 
             // companyNameTextBox
             // 
-            companyNameTextBox.Location = new Point(128, 63);
+            companyNameTextBox.Location = new Point(176, 63);
             companyNameTextBox.Name = "companyNameTextBox";
-            companyNameTextBox.Size = new Size(256, 23);
+            companyNameTextBox.Size = new Size(208, 23);
             companyNameTextBox.TabIndex = 9;
             // 
             // destinationTextBox
             // 
-            destinationTextBox.Location = new Point(128, 92);
+            destinationTextBox.Location = new Point(176, 92);
             destinationTextBox.Name = "destinationTextBox";
-            destinationTextBox.Size = new Size(256, 23);
+            destinationTextBox.Size = new Size(208, 23);
             destinationTextBox.TabIndex = 10;
             // 
             // departureDateTimePicker
             // 
-            departureDateTimePicker.Location = new Point(128, 121);
+            departureDateTimePicker.Location = new Point(176, 121);
             departureDateTimePicker.Name = "departureDateTimePicker";
-            departureDateTimePicker.Size = new Size(200, 23);
+            departureDateTimePicker.Size = new Size(152, 23);
             departureDateTimePicker.TabIndex = 11;
             // 
             // priceNumericUpDown
             // 
-            priceNumericUpDown.Location = new Point(128, 150);
+            priceNumericUpDown.Location = new Point(176, 150);
             priceNumericUpDown.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             priceNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             priceNumericUpDown.Name = "priceNumericUpDown";
@@ -172,7 +201,7 @@
             // 
             // addFlightButton
             // 
-            addFlightButton.Location = new Point(128, 223);
+            addFlightButton.Location = new Point(128, 277);
             addFlightButton.Name = "addFlightButton";
             addFlightButton.Size = new Size(256, 31);
             addFlightButton.TabIndex = 13;
@@ -184,14 +213,14 @@
             // 
             editListBox.FormattingEnabled = true;
             editListBox.ItemHeight = 15;
-            editListBox.Location = new Point(128, 260);
+            editListBox.Location = new Point(176, 314);
             editListBox.Name = "editListBox";
-            editListBox.Size = new Size(256, 154);
+            editListBox.Size = new Size(208, 154);
             editListBox.TabIndex = 14;
             // 
             // resetButton
             // 
-            resetButton.Location = new Point(12, 223);
+            resetButton.Location = new Point(12, 277);
             resetButton.Name = "resetButton";
             resetButton.Size = new Size(110, 31);
             resetButton.TabIndex = 15;
@@ -201,9 +230,9 @@
             // 
             // editButton
             // 
-            editButton.Location = new Point(128, 420);
+            editButton.Location = new Point(176, 474);
             editButton.Name = "editButton";
-            editButton.Size = new Size(256, 48);
+            editButton.Size = new Size(208, 48);
             editButton.TabIndex = 16;
             editButton.Text = "Редактировать";
             editButton.UseVisualStyleBackColor = true;
@@ -211,15 +240,15 @@
             // 
             // pictureBox
             // 
-            pictureBox.Location = new Point(12, 260);
+            pictureBox.Location = new Point(6, 22);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(110, 154);
+            pictureBox.Size = new Size(146, 123);
             pictureBox.TabIndex = 17;
             pictureBox.TabStop = false;
             // 
             // photoButton
             // 
-            photoButton.Location = new Point(128, 179);
+            photoButton.Location = new Point(176, 179);
             photoButton.Name = "photoButton";
             photoButton.Size = new Size(96, 29);
             photoButton.TabIndex = 18;
@@ -227,33 +256,91 @@
             photoButton.UseVisualStyleBackColor = true;
             photoButton.Click += photoButton_Click;
             // 
-            // fileSaveButton
+            // planeTypeLabel
             // 
-            fileSaveButton.Location = new Point(6, 355);
-            fileSaveButton.Name = "fileSaveButton";
-            fileSaveButton.Size = new Size(190, 39);
-            fileSaveButton.TabIndex = 1;
-            fileSaveButton.Text = "Сохранить в файл";
-            fileSaveButton.UseVisualStyleBackColor = true;
-            fileSaveButton.Click += fileSaveButton_Click;
+            planeTypeLabel.AutoSize = true;
+            planeTypeLabel.Location = new Point(85, 218);
+            planeTypeLabel.Name = "planeTypeLabel";
+            planeTypeLabel.Size = new Size(85, 15);
+            planeTypeLabel.TabIndex = 19;
+            planeTypeLabel.Text = "Тип самолета:";
             // 
-            // fileLoadButton
+            // planeSpecPassengerLabel
             // 
-            fileLoadButton.Location = new Point(202, 355);
-            fileLoadButton.Name = "fileLoadButton";
-            fileLoadButton.Size = new Size(190, 39);
-            fileLoadButton.TabIndex = 2;
-            fileLoadButton.Text = "Загрузить из файла";
-            fileLoadButton.UseVisualStyleBackColor = true;
-            fileLoadButton.Click += fileLoadButton_Click;
+            planeSpecPassengerLabel.AutoSize = true;
+            planeSpecPassengerLabel.Location = new Point(25, 250);
+            planeSpecPassengerLabel.Name = "planeSpecPassengerLabel";
+            planeSpecPassengerLabel.Size = new Size(145, 15);
+            planeSpecPassengerLabel.TabIndex = 20;
+            planeSpecPassengerLabel.Text = "Количество пассажиров:";
+            // 
+            // passengerTypeRadioButton
+            // 
+            passengerTypeRadioButton.AutoSize = true;
+            passengerTypeRadioButton.Checked = true;
+            passengerTypeRadioButton.Location = new Point(176, 214);
+            passengerTypeRadioButton.Name = "passengerTypeRadioButton";
+            passengerTypeRadioButton.Size = new Size(107, 19);
+            passengerTypeRadioButton.TabIndex = 21;
+            passengerTypeRadioButton.TabStop = true;
+            passengerTypeRadioButton.Text = "Пассажирский";
+            passengerTypeRadioButton.UseVisualStyleBackColor = true;
+            passengerTypeRadioButton.CheckedChanged += passengerTypeRadioButton_CheckedChanged;
+            // 
+            // cargoTypeRadioButton
+            // 
+            cargoTypeRadioButton.AutoSize = true;
+            cargoTypeRadioButton.Location = new Point(289, 214);
+            cargoTypeRadioButton.Name = "cargoTypeRadioButton";
+            cargoTypeRadioButton.Size = new Size(76, 19);
+            cargoTypeRadioButton.TabIndex = 22;
+            cargoTypeRadioButton.Text = "Грузовой";
+            cargoTypeRadioButton.UseVisualStyleBackColor = true;
+            cargoTypeRadioButton.CheckedChanged += cargoTypeRadioButton_CheckedChanged;
+            // 
+            // planeSpecNumericUpDown
+            // 
+            planeSpecNumericUpDown.Location = new Point(176, 248);
+            planeSpecNumericUpDown.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            planeSpecNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            planeSpecNumericUpDown.Name = "planeSpecNumericUpDown";
+            planeSpecNumericUpDown.Size = new Size(120, 23);
+            planeSpecNumericUpDown.TabIndex = 23;
+            planeSpecNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // planeSpecCargoLabel
+            // 
+            planeSpecCargoLabel.AutoSize = true;
+            planeSpecCargoLabel.Location = new Point(52, 250);
+            planeSpecCargoLabel.Name = "planeSpecCargoLabel";
+            planeSpecCargoLabel.Size = new Size(118, 15);
+            planeSpecCargoLabel.TabIndex = 24;
+            planeSpecCargoLabel.Text = "Максимальный вес:";
+            planeSpecCargoLabel.Visible = false;
+            // 
+            // photoGroupBox
+            // 
+            photoGroupBox.Controls.Add(pictureBox);
+            photoGroupBox.Location = new Point(12, 317);
+            photoGroupBox.Name = "photoGroupBox";
+            photoGroupBox.Size = new Size(158, 151);
+            photoGroupBox.TabIndex = 25;
+            photoGroupBox.TabStop = false;
+            photoGroupBox.Text = "Фото";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 480);
+            ClientSize = new Size(800, 534);
+            Controls.Add(photoGroupBox);
+            Controls.Add(planeSpecCargoLabel);
+            Controls.Add(planeSpecNumericUpDown);
+            Controls.Add(cargoTypeRadioButton);
+            Controls.Add(passengerTypeRadioButton);
+            Controls.Add(planeSpecPassengerLabel);
+            Controls.Add(planeTypeLabel);
             Controls.Add(photoButton);
-            Controls.Add(pictureBox);
             Controls.Add(editButton);
             Controls.Add(resetButton);
             Controls.Add(editListBox);
@@ -276,6 +363,8 @@
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)planeSpecNumericUpDown).EndInit();
+            photoGroupBox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -305,5 +394,12 @@
         private SaveFileDialog saveFileDialog;
         private Button fileLoadButton;
         private Button fileSaveButton;
+        private Label planeTypeLabel;
+        private Label planeSpecPassengerLabel;
+        private RadioButton passengerTypeRadioButton;
+        private RadioButton cargoTypeRadioButton;
+        private NumericUpDown planeSpecNumericUpDown;
+        private Label planeSpecCargoLabel;
+        private GroupBox photoGroupBox;
     }
 }

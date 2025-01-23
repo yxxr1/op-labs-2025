@@ -2,10 +2,15 @@
 {
     public class Plane
     {
+        virtual public string Type
+        {
+            get => "";
+            set { }
+        }
         private string destination;
         private DateTime departureDateTime;
         private int flightPrice;
-        private string photoFile;
+        protected string photoFile;
 
         public string Destination {
             get => destination;
@@ -27,11 +32,11 @@
                 flightPrice = Math.Max(value, 100);
             }
         }
-        public string Serialized {
+        public virtual string Serialized {
             get => FlightId + "\n" + CompanyName + "\n" + Destination + "\n" + DepartureDateTime.ToString() + "\n" + FlightPrice + "\n" + photoFile;
         }
 
-        public string GetText(bool isShowDaysToDeparture = true)
+        public virtual string GetText(bool isShowDaysToDeparture = true)
         {
             string daysLeftText = "";
 

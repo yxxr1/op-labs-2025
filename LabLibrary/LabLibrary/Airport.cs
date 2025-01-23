@@ -37,10 +37,19 @@ namespace LabLibrary
                     string? dateTime = reader.ReadLine();
                     string? price = reader.ReadLine();
                     string? photo = reader.ReadLine();
+                    string? type = reader.ReadLine();
+                    string? spec = reader.ReadLine();
 
-                    if (flightId != null && companyName != null && destination != null && dateTime != null && price != null && photo != null) {
-                        Plane plane = new Plane(flightId, companyName, destination, DateTime.Parse(dateTime), Int32.Parse(price), photo);
-                        this.Planes.Add(plane);
+                    if (type != null && flightId != null && companyName != null && destination != null && dateTime != null && price != null && spec != null && photo != null) {
+                        if (type == "Passenger")
+                        {
+                            PassengerPlane plane = new PassengerPlane(flightId, companyName, destination, DateTime.Parse(dateTime), Int32.Parse(price), Int32.Parse(spec), photo);
+                            this.Planes.Add(plane);
+                        } else if (type == "Cargo")
+                        {
+                            CargoPlane plane = new CargoPlane(flightId, companyName, destination, DateTime.Parse(dateTime), Int32.Parse(price), Int32.Parse(spec), photo);
+                            this.Planes.Add(plane);
+                        }
                     }
                 }
                 
