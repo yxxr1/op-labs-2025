@@ -59,6 +59,8 @@
             planeSpecNumericUpDown = new NumericUpDown();
             planeSpecCargoLabel = new Label();
             photoGroupBox = new GroupBox();
+            fontDialog = new FontDialog();
+            fontButton = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -217,6 +219,7 @@
             editListBox.Name = "editListBox";
             editListBox.Size = new Size(208, 154);
             editListBox.TabIndex = 14;
+            editListBox.SelectedIndexChanged += editListBox_SelectedIndexChanged;
             // 
             // resetButton
             // 
@@ -328,11 +331,22 @@
             photoGroupBox.TabStop = false;
             photoGroupBox.Text = "Фото";
             // 
+            // fontButton
+            // 
+            fontButton.Location = new Point(12, 474);
+            fontButton.Name = "fontButton";
+            fontButton.Size = new Size(158, 48);
+            fontButton.TabIndex = 26;
+            fontButton.Text = "Выбор шрифта";
+            fontButton.UseVisualStyleBackColor = true;
+            fontButton.Click += fontButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 534);
+            Controls.Add(fontButton);
             Controls.Add(photoGroupBox);
             Controls.Add(planeSpecCargoLabel);
             Controls.Add(planeSpecNumericUpDown);
@@ -401,5 +415,7 @@
         private NumericUpDown planeSpecNumericUpDown;
         private Label planeSpecCargoLabel;
         private GroupBox photoGroupBox;
+        private FontDialog fontDialog;
+        private Button fontButton;
     }
 }

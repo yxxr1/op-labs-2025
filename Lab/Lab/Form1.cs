@@ -69,7 +69,8 @@ namespace Lab
                             (int)this.planeSpecNumericUpDown.Value,
                             this.photoOpenFileDialog.FileName
                             );
-                    } else
+                    }
+                    else
                     {
                         plane = new CargoPlane(
                             this.flightIdTextBox.Text,
@@ -168,7 +169,8 @@ namespace Lab
                 {
                     this.passengerTypeRadioButton.Checked = true;
                     this.setDataBindings((PassengerPlane)selectedItem);
-                } else if (selectedItem.Type == "Cargo")
+                }
+                else if (selectedItem.Type == "Cargo")
                 {
                     this.cargoTypeRadioButton.Checked = true;
                     this.setDataBindings((CargoPlane)selectedItem);
@@ -208,6 +210,20 @@ namespace Lab
         {
             this.planeSpecPassengerLabel.Visible = false;
             this.planeSpecCargoLabel.Visible = true;
+        }
+
+        private void fontButton_Click(object sender, EventArgs e)
+        {
+            fontDialog.ShowDialog();
+        }
+
+        private void editListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.editListBox.SelectedItem != null)
+            {
+                Plane selectedItem = (Plane)this.editListBox.SelectedItem;
+                selectedItem.DrawFlightId(pictureBox, fontDialog.Font);
+            }
         }
     }
 }

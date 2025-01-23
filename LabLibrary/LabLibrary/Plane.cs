@@ -1,6 +1,6 @@
 ﻿namespace LabLibrary
 {
-    public class Plane
+    abstract public class Plane
     {
         virtual public string Type
         {
@@ -18,7 +18,7 @@
                 destination = char.ToUpper(value[0]) + value.Substring(1);
             }
         }
-        public string FlightId { get; set; }
+        abstract public string FlightId { get; set; }
         public string CompanyName { get; set; }
         public DateTime DepartureDateTime {
             get => departureDateTime;
@@ -81,6 +81,20 @@
 
         public void DaysToDeparture(out int result) {
             result = (this.DepartureDateTime - DateTime.Now).Days;
+        }
+
+        public abstract string GetPlaneSpecText();
+
+        public override string ToString()
+        {
+            return this.FlightId;
+        }
+
+        public void DrawFlightId(PictureBox box, Font font)
+        {
+            Graphics g = Graphics.FromHwnd(box.Handle);
+            g.Clear(SystemColors.Control);
+            g.DrawString(FlightId, font, Brushes.Red, 1, 1);
         }
     }
 }

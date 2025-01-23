@@ -4,6 +4,12 @@
     {
         public override sealed string Type { get => "Cargo"; }
         private int maxWeight;
+        private string flightId;
+        public override string FlightId
+        {
+            get => flightId + "_" + Type + "_" + MaxWeight;
+            set => flightId = value;
+        }
 
         public int MaxWeight {
             get => maxWeight;
@@ -17,7 +23,7 @@
         }
         public override string GetText(bool isShowDaysToDeparture = true)
         {
-            return base.GetText(isShowDaysToDeparture) + "\nТип: Грузовой\nМаксимальный вес: " + MaxWeight;
+            return base.GetText(isShowDaysToDeparture) + "\n" + GetPlaneSpecText();
         }
 
         public CargoPlane(string flightId, string companyName, string destination, DateTime dateTime, int price, int maxWeight, string photo) : base(flightId, companyName, destination, dateTime, price, photo)
@@ -28,6 +34,11 @@
         public CargoPlane(string destination, DateTime dateTime, int price, int maxWeight, string photo) : base(destination, dateTime, price, photo)
         {
             this.MaxWeight = maxWeight;
+        }
+
+        public override string GetPlaneSpecText()
+        {
+            return "Тип: Грузовой\nМаксимальный вес: " + MaxWeight;
         }
     }
 }
