@@ -24,11 +24,18 @@ namespace LabLibrary
             }
         }
 
+        public void AddPlane(Plane plane)
+        {
+            Planes.Add(plane);
+            Event.Invoke("Рейс \"" + plane.FlightId + "\" добавлен в аэропорт " + Name);
+        }
+
         public void ReadFromFile(OpenFileDialog dialog)
         {
             if (dialog.ShowDialog() != DialogResult.Cancel) {
                 this.Planes.Clear();
                 StreamReader reader = new StreamReader(dialog.FileName);
+                Event.Invoke("Данные рейсов загружаются из файла " + dialog.FileName);
 
                 while (!reader.EndOfStream) {
                     string? flightId = reader.ReadLine();
@@ -44,16 +51,18 @@ namespace LabLibrary
                         if (type == "Passenger")
                         {
                             PassengerPlane plane = new PassengerPlane(flightId, companyName, destination, DateTime.Parse(dateTime), Int32.Parse(price), Int32.Parse(spec), photo);
-                            this.Planes.Add(plane);
+                            this.AddPlane(plane);
                         } else if (type == "Cargo")
                         {
                             CargoPlane plane = new CargoPlane(flightId, companyName, destination, DateTime.Parse(dateTime), Int32.Parse(price), Int32.Parse(spec), photo);
-                            this.Planes.Add(plane);
+                            this.AddPlane(plane);
                         }
                     }
                 }
                 
                 reader.Close();
+
+                Event.Invoke("Конец загрузки из файла");
             }
         }
         public void WriteToFile(SaveFileDialog dialog)
@@ -67,6 +76,8 @@ namespace LabLibrary
                 }
 
                 writer.Close();
+
+                Event.Invoke("Данные аэропорта " + Name + " выгружены в файл " + dialog.FileName);
             }
         }
         public void WriteToFile(string fileName)
@@ -79,6 +90,8 @@ namespace LabLibrary
             }
 
             writer.Close();
+
+            Event.Invoke("Данные аэропорта " + Name + " выгружены в файл " + fileName);
         }
 
         public void GetText(ref string text)
@@ -89,5 +102,8 @@ namespace LabLibrary
                 text += plane.GetText() + "\n\n";
             }
         }
+
+        public delegate void AirportEvent(string message);
+        public event AirportEvent Event;
     }
 }

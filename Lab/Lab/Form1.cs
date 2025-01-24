@@ -10,12 +10,30 @@ namespace Lab
             InitializeComponent();
 
             this.Airport = new Airport();
+            Airport.Event += ShowLog;
+            Airport.Event += WriteLogToFile;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             editListBox.DataSource = this.Airport.Planes;
             editListBox.DisplayMember = "FlightId";
+        }
+
+        private void ShowLog(string airportMessage)
+        {
+            eventTextBox.Text += airportMessage + "\n";
+        }
+        private void WriteLogToFile(string airportMessage)
+        {
+            if (eventLogSaveFileDialog.FileName != "")
+            {
+                StreamWriter writer = new StreamWriter(eventLogSaveFileDialog.FileName, true);
+
+                writer.WriteLine("["+ DateTime.Now.ToString() + "] " + airportMessage);
+
+                writer.Close();
+            }
         }
 
         private void outputFlights()
@@ -107,7 +125,7 @@ namespace Lab
                     }
                 }
 
-                this.Airport.Planes.Add(plane);
+                this.Airport.AddPlane(plane);
 
                 this.outputFlights();
                 this.clearForm();
@@ -223,6 +241,14 @@ namespace Lab
             {
                 Plane selectedItem = (Plane)this.editListBox.SelectedItem;
                 selectedItem.DrawFlightId(pictureBox, fontDialog.Font);
+            }
+        }
+
+        private void eventLogButton_Click(object sender, EventArgs e)
+        {
+            if (eventLogSaveFileDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                eventLogButton.ForeColor = Color.Green;
             }
         }
     }

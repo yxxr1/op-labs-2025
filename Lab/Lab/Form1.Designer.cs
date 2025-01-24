@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBox1 = new GroupBox();
+            outputGroupBox = new GroupBox();
             fileLoadButton = new Button();
             fileSaveButton = new Button();
             outputTextBox = new RichTextBox();
@@ -61,24 +61,29 @@
             photoGroupBox = new GroupBox();
             fontDialog = new FontDialog();
             fontButton = new Button();
-            groupBox1.SuspendLayout();
+            eventTextBox = new RichTextBox();
+            eventGroupBox = new GroupBox();
+            eventLogButton = new Button();
+            eventLogSaveFileDialog = new SaveFileDialog();
+            outputGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)planeSpecNumericUpDown).BeginInit();
             photoGroupBox.SuspendLayout();
+            eventGroupBox.SuspendLayout();
             SuspendLayout();
             // 
-            // groupBox1
+            // outputGroupBox
             // 
-            groupBox1.Controls.Add(fileLoadButton);
-            groupBox1.Controls.Add(fileSaveButton);
-            groupBox1.Controls.Add(outputTextBox);
-            groupBox1.Location = new Point(390, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(398, 456);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Рейсы";
+            outputGroupBox.Controls.Add(fileLoadButton);
+            outputGroupBox.Controls.Add(fileSaveButton);
+            outputGroupBox.Controls.Add(outputTextBox);
+            outputGroupBox.Location = new Point(390, 12);
+            outputGroupBox.Name = "outputGroupBox";
+            outputGroupBox.Size = new Size(398, 456);
+            outputGroupBox.TabIndex = 1;
+            outputGroupBox.TabStop = false;
+            outputGroupBox.Text = "Рейсы";
             // 
             // fileLoadButton
             // 
@@ -104,6 +109,7 @@
             // 
             outputTextBox.Location = new Point(6, 22);
             outputTextBox.Name = "outputTextBox";
+            outputTextBox.ReadOnly = true;
             outputTextBox.Size = new Size(386, 383);
             outputTextBox.TabIndex = 0;
             outputTextBox.Text = "";
@@ -341,11 +347,42 @@
             fontButton.UseVisualStyleBackColor = true;
             fontButton.Click += fontButton_Click;
             // 
+            // eventTextBox
+            // 
+            eventTextBox.Location = new Point(6, 22);
+            eventTextBox.Name = "eventTextBox";
+            eventTextBox.ReadOnly = true;
+            eventTextBox.Size = new Size(266, 431);
+            eventTextBox.TabIndex = 27;
+            eventTextBox.Text = "";
+            // 
+            // eventGroupBox
+            // 
+            eventGroupBox.Controls.Add(eventLogButton);
+            eventGroupBox.Controls.Add(eventTextBox);
+            eventGroupBox.Location = new Point(794, 15);
+            eventGroupBox.Name = "eventGroupBox";
+            eventGroupBox.Size = new Size(278, 504);
+            eventGroupBox.TabIndex = 28;
+            eventGroupBox.TabStop = false;
+            eventGroupBox.Text = "События";
+            // 
+            // eventLogButton
+            // 
+            eventLogButton.Location = new Point(6, 459);
+            eventLogButton.Name = "eventLogButton";
+            eventLogButton.Size = new Size(266, 39);
+            eventLogButton.TabIndex = 28;
+            eventLogButton.Text = "Выбрать файл для лога";
+            eventLogButton.UseVisualStyleBackColor = true;
+            eventLogButton.Click += eventLogButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 534);
+            ClientSize = new Size(1084, 531);
+            Controls.Add(eventGroupBox);
             Controls.Add(fontButton);
             Controls.Add(photoGroupBox);
             Controls.Add(planeSpecCargoLabel);
@@ -370,21 +407,24 @@
             Controls.Add(flightIdLabel);
             Controls.Add(flightIdTextBox);
             Controls.Add(refreshButton);
-            Controls.Add(groupBox1);
+            Controls.Add(outputGroupBox);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            groupBox1.ResumeLayout(false);
+            outputGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)planeSpecNumericUpDown).EndInit();
             photoGroupBox.ResumeLayout(false);
+            eventGroupBox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private GroupBox groupBox1;
+        private GroupBox outputGroupBox;
         private RichTextBox outputTextBox;
         private Button refreshButton;
         private TextBox flightIdTextBox;
@@ -417,5 +457,9 @@
         private GroupBox photoGroupBox;
         private FontDialog fontDialog;
         private Button fontButton;
+        private RichTextBox eventTextBox;
+        private GroupBox eventGroupBox;
+        private Button eventLogButton;
+        private SaveFileDialog eventLogSaveFileDialog;
     }
 }
