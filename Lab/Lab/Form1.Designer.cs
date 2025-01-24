@@ -65,6 +65,8 @@
             eventGroupBox = new GroupBox();
             eventLogButton = new Button();
             eventLogSaveFileDialog = new SaveFileDialog();
+            replaceIdLabel = new Label();
+            replaceIdTextBox = new TextBox();
             outputGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -80,14 +82,14 @@
             outputGroupBox.Controls.Add(outputTextBox);
             outputGroupBox.Location = new Point(390, 12);
             outputGroupBox.Name = "outputGroupBox";
-            outputGroupBox.Size = new Size(398, 456);
+            outputGroupBox.Size = new Size(398, 485);
             outputGroupBox.TabIndex = 1;
             outputGroupBox.TabStop = false;
             outputGroupBox.Text = "Рейсы";
             // 
             // fileLoadButton
             // 
-            fileLoadButton.Location = new Point(202, 411);
+            fileLoadButton.Location = new Point(202, 437);
             fileLoadButton.Name = "fileLoadButton";
             fileLoadButton.Size = new Size(190, 39);
             fileLoadButton.TabIndex = 2;
@@ -97,7 +99,7 @@
             // 
             // fileSaveButton
             // 
-            fileSaveButton.Location = new Point(6, 411);
+            fileSaveButton.Location = new Point(6, 437);
             fileSaveButton.Name = "fileSaveButton";
             fileSaveButton.Size = new Size(190, 39);
             fileSaveButton.TabIndex = 1;
@@ -110,13 +112,13 @@
             outputTextBox.Location = new Point(6, 22);
             outputTextBox.Name = "outputTextBox";
             outputTextBox.ReadOnly = true;
-            outputTextBox.Size = new Size(386, 383);
+            outputTextBox.Size = new Size(386, 409);
             outputTextBox.TabIndex = 0;
             outputTextBox.Text = "";
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(390, 474);
+            refreshButton.Location = new Point(390, 503);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(398, 48);
             refreshButton.TabIndex = 2;
@@ -209,7 +211,7 @@
             // 
             // addFlightButton
             // 
-            addFlightButton.Location = new Point(128, 277);
+            addFlightButton.Location = new Point(128, 306);
             addFlightButton.Name = "addFlightButton";
             addFlightButton.Size = new Size(256, 31);
             addFlightButton.TabIndex = 13;
@@ -221,7 +223,7 @@
             // 
             editListBox.FormattingEnabled = true;
             editListBox.ItemHeight = 15;
-            editListBox.Location = new Point(176, 314);
+            editListBox.Location = new Point(176, 343);
             editListBox.Name = "editListBox";
             editListBox.Size = new Size(208, 154);
             editListBox.TabIndex = 14;
@@ -229,7 +231,7 @@
             // 
             // resetButton
             // 
-            resetButton.Location = new Point(12, 277);
+            resetButton.Location = new Point(12, 306);
             resetButton.Name = "resetButton";
             resetButton.Size = new Size(110, 31);
             resetButton.TabIndex = 15;
@@ -239,7 +241,7 @@
             // 
             // editButton
             // 
-            editButton.Location = new Point(176, 474);
+            editButton.Location = new Point(176, 503);
             editButton.Name = "editButton";
             editButton.Size = new Size(208, 48);
             editButton.TabIndex = 16;
@@ -330,7 +332,7 @@
             // photoGroupBox
             // 
             photoGroupBox.Controls.Add(pictureBox);
-            photoGroupBox.Location = new Point(12, 317);
+            photoGroupBox.Location = new Point(12, 343);
             photoGroupBox.Name = "photoGroupBox";
             photoGroupBox.Size = new Size(158, 151);
             photoGroupBox.TabIndex = 25;
@@ -339,7 +341,7 @@
             // 
             // fontButton
             // 
-            fontButton.Location = new Point(12, 474);
+            fontButton.Location = new Point(12, 503);
             fontButton.Name = "fontButton";
             fontButton.Size = new Size(158, 48);
             fontButton.TabIndex = 26;
@@ -352,7 +354,7 @@
             eventTextBox.Location = new Point(6, 22);
             eventTextBox.Name = "eventTextBox";
             eventTextBox.ReadOnly = true;
-            eventTextBox.Size = new Size(266, 431);
+            eventTextBox.Size = new Size(266, 463);
             eventTextBox.TabIndex = 27;
             eventTextBox.Text = "";
             // 
@@ -360,16 +362,16 @@
             // 
             eventGroupBox.Controls.Add(eventLogButton);
             eventGroupBox.Controls.Add(eventTextBox);
-            eventGroupBox.Location = new Point(794, 15);
+            eventGroupBox.Location = new Point(794, 12);
             eventGroupBox.Name = "eventGroupBox";
-            eventGroupBox.Size = new Size(278, 504);
+            eventGroupBox.Size = new Size(278, 539);
             eventGroupBox.TabIndex = 28;
             eventGroupBox.TabStop = false;
             eventGroupBox.Text = "События";
             // 
             // eventLogButton
             // 
-            eventLogButton.Location = new Point(6, 459);
+            eventLogButton.Location = new Point(6, 491);
             eventLogButton.Name = "eventLogButton";
             eventLogButton.Size = new Size(266, 39);
             eventLogButton.TabIndex = 28;
@@ -377,11 +379,29 @@
             eventLogButton.UseVisualStyleBackColor = true;
             eventLogButton.Click += eventLogButton_Click;
             // 
+            // replaceIdLabel
+            // 
+            replaceIdLabel.AutoSize = true;
+            replaceIdLabel.Location = new Point(88, 280);
+            replaceIdLabel.Name = "replaceIdLabel";
+            replaceIdLabel.Size = new Size(85, 15);
+            replaceIdLabel.TabIndex = 29;
+            replaceIdLabel.Text = "ID для замены";
+            // 
+            // replaceIdTextBox
+            // 
+            replaceIdTextBox.Location = new Point(176, 277);
+            replaceIdTextBox.Name = "replaceIdTextBox";
+            replaceIdTextBox.Size = new Size(208, 23);
+            replaceIdTextBox.TabIndex = 30;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1084, 531);
+            ClientSize = new Size(1084, 561);
+            Controls.Add(replaceIdTextBox);
+            Controls.Add(replaceIdLabel);
             Controls.Add(eventGroupBox);
             Controls.Add(fontButton);
             Controls.Add(photoGroupBox);
@@ -409,7 +429,8 @@
             Controls.Add(refreshButton);
             Controls.Add(outputGroupBox);
             MaximizeBox = false;
-            MinimizeBox = false;
+            MaximumSize = new Size(1100, 600);
+            MinimumSize = new Size(1100, 600);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -461,5 +482,7 @@
         private GroupBox eventGroupBox;
         private Button eventLogButton;
         private SaveFileDialog eventLogSaveFileDialog;
+        private Label replaceIdLabel;
+        private TextBox replaceIdTextBox;
     }
 }

@@ -61,6 +61,7 @@ namespace Lab
             this.photoButton.ForeColor = Color.Black;
             this.passengerTypeRadioButton.Checked = true;
             this.planeSpecNumericUpDown.Value = 1;
+            this.replaceIdTextBox.Text = "";
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
@@ -125,7 +126,14 @@ namespace Lab
                     }
                 }
 
-                this.Airport.AddPlane(plane);
+                if (replaceIdTextBox.Text != "")
+                {
+                    Airport[replaceIdTextBox.Text] = plane;
+                }
+                else
+                {
+                    Airport.AddPlane(plane);
+                }
 
                 this.outputFlights();
                 this.clearForm();
@@ -169,6 +177,7 @@ namespace Lab
             this.photoButton.Enabled = true;
             this.passengerTypeRadioButton.Enabled = true;
             this.cargoTypeRadioButton.Enabled = true;
+            this.replaceIdTextBox.Enabled = true;
         }
 
         private void editButton_Click(object sender, EventArgs e)
@@ -179,9 +188,11 @@ namespace Lab
                 this.photoButton.Enabled = false;
                 this.passengerTypeRadioButton.Enabled = false;
                 this.cargoTypeRadioButton.Enabled = false;
+                this.replaceIdTextBox.Enabled = false;
                 this.resetDataBindings();
+                this.clearForm();
 
-                Plane selectedItem = (Plane)this.editListBox.SelectedItem;
+                Plane selectedItem = Airport[this.editListBox.SelectedIndex];
 
                 if (selectedItem.Type == "Passenger")
                 {
@@ -239,7 +250,7 @@ namespace Lab
         {
             if (this.editListBox.SelectedItem != null)
             {
-                Plane selectedItem = (Plane)this.editListBox.SelectedItem;
+                Plane selectedItem = Airport[this.editListBox.SelectedIndex];
                 selectedItem.DrawFlightId(pictureBox, fontDialog.Font);
             }
         }

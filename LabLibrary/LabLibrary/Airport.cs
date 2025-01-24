@@ -7,6 +7,43 @@ namespace LabLibrary
         public const string Name = "Airport";
  
         public List<Plane> Planes = new List<Plane>();
+        public Plane this[int index]
+        {
+            get => Planes[index];
+            set => Planes.Insert(index, value);
+        }
+        public Plane? this[string flightId]
+        {
+            get
+            {
+                for (int i = 0; i < this.Planes.Count; i++)
+                {
+                    if (Planes[i].FlightId == flightId)
+                    {
+                        return this.Planes[i];
+                    }
+                }
+
+                return null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    for (int i = 0; i < this.Planes.Count; i++)
+                    {
+                        if (Planes[i].FlightId == flightId)
+                        {
+                            this.Planes[i] = value;
+                            Event.Invoke("Рейс " + flightId + " был перезаписан рейсом " + value.FlightId);
+                            return;
+                        }
+                    }
+
+                    Event.Invoke("Не удалось перезаписать рейс " + flightId + ", т.к. он не существует");
+                }
+            }
+        }
 
         public static readonly Color OutputColor;
 
