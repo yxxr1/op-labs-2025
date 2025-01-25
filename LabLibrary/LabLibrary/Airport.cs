@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
+using System.Numerics;
 
 namespace LabLibrary
 {
-    public class Airport
+    public class Airport: ICommunicaion
     {
-        public const string Name = "Airport";
+        public string Name { get => "Airport"; }
  
         public List<Plane> Planes = new List<Plane>();
         public Plane this[int index]
@@ -35,6 +36,8 @@ namespace LabLibrary
                         if (Planes[i].FlightId == flightId)
                         {
                             this.Planes[i] = value;
+                            value.OnAddToAirport(this);
+                            value.ReceiveMessage(this, "Самолетов в аэропорту: " + Planes.Count);
                             Event.Invoke("Рейс " + flightId + " был перезаписан рейсом " + value.FlightId);
                             return;
                         }
@@ -65,6 +68,8 @@ namespace LabLibrary
         {
             Planes.Add(plane);
             Event.Invoke("Рейс \"" + plane.FlightId + "\" добавлен в аэропорт " + Name);
+            plane.OnAddToAirport(this);
+            plane.ReceiveMessage(this, "Самолетов в аэропорту: " + Planes.Count);
         }
 
         public void ReadFromFile(OpenFileDialog dialog)
@@ -142,5 +147,10 @@ namespace LabLibrary
 
         public delegate void AirportEvent(string message);
         public event AirportEvent Event;
+
+        public void ReceiveMessage(ICommunicaion sender, string message)
+        {
+            Event.Invoke("Получено сообщение от \"" + sender.Name + "\": " + message);
+        }
     }
 }

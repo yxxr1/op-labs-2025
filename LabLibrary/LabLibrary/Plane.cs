@@ -1,6 +1,6 @@
 ﻿namespace LabLibrary
 {
-    abstract public class Plane
+    abstract public class Plane: ICommunicaion
     {
         virtual public string Type
         {
@@ -32,6 +32,8 @@
                 flightPrice = Math.Max(value, 100);
             }
         }
+        public string Name { get => "Рейс " + FlightId; }
+        private string receivedMessages = "";
         public virtual string Serialized {
             get => FlightId + "\n" + CompanyName + "\n" + Destination + "\n" + DepartureDateTime.ToString() + "\n" + FlightPrice + "\n" + photoFile;
         }
@@ -45,8 +47,8 @@
                 daysLeftText = " (осталось " + daysLeft + " д.)" ;
             }
 
-            return String.Format("Рейс \"{0}\" компании \"{1}\":\nПункт назначения: {2}\nДата и время отправления: {3}{4}\nСтоимость: {5}",
-                FlightId, CompanyName, Destination, DepartureDateTime.ToString(), daysLeftText, FlightPrice);
+            return String.Format("Рейс \"{0}\" компании \"{1}\":\nПункт назначения: {2}\nДата и время отправления: {3}{4}\nСтоимость: {5}\nПолученные сообщения:\n{6}",
+                FlightId, CompanyName, Destination, DepartureDateTime.ToString(), daysLeftText, FlightPrice, receivedMessages);
         }
 
         public Plane(string flightId, string companyName, string destination, DateTime dateTime, int price, string photo)
@@ -66,6 +68,10 @@
             this.DepartureDateTime = dateTime;
             this.FlightPrice = price;
             this.photoFile = photo;
+        }
+        public void OnAddToAirport(Airport airport)
+        {
+            airport.ReceiveMessage(this, "Прибыл в аэропорт");
         }
 
         public void ShowPhoto(PictureBox box) {
@@ -95,6 +101,10 @@
             Graphics g = Graphics.FromHwnd(box.Handle);
             g.Clear(SystemColors.Control);
             g.DrawString(FlightId, font, Brushes.Red, 1, 1);
+        }
+        public void ReceiveMessage(ICommunicaion sender, string message)
+        {
+            receivedMessages += "Сообщение от \"" + sender.Name + "\": " + message + "\n";
         }
     }
 }
