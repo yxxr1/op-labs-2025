@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             outputGroupBox = new GroupBox();
+            searchLabel = new Label();
+            searchDestinationLabel = new Label();
+            searchDateTimeLabel = new Label();
+            searchFlightIdLabel = new Label();
+            searchFlightIdTextBox = new TextBox();
+            searchDateTimePicker = new DateTimePicker();
+            searchButton = new Button();
+            searchDestinationTextBox = new TextBox();
             fileLoadButton = new Button();
             fileSaveButton = new Button();
             outputTextBox = new RichTextBox();
@@ -77,15 +85,92 @@
             // 
             // outputGroupBox
             // 
+            outputGroupBox.Controls.Add(searchLabel);
+            outputGroupBox.Controls.Add(searchDestinationLabel);
+            outputGroupBox.Controls.Add(searchDateTimeLabel);
+            outputGroupBox.Controls.Add(searchFlightIdLabel);
+            outputGroupBox.Controls.Add(searchFlightIdTextBox);
+            outputGroupBox.Controls.Add(searchDateTimePicker);
+            outputGroupBox.Controls.Add(searchButton);
+            outputGroupBox.Controls.Add(searchDestinationTextBox);
             outputGroupBox.Controls.Add(fileLoadButton);
             outputGroupBox.Controls.Add(fileSaveButton);
             outputGroupBox.Controls.Add(outputTextBox);
+            outputGroupBox.Controls.Add(refreshButton);
             outputGroupBox.Location = new Point(390, 12);
             outputGroupBox.Name = "outputGroupBox";
-            outputGroupBox.Size = new Size(398, 485);
+            outputGroupBox.Size = new Size(398, 539);
             outputGroupBox.TabIndex = 1;
             outputGroupBox.TabStop = false;
             outputGroupBox.Text = "Рейсы";
+            // 
+            // searchLabel
+            // 
+            searchLabel.AutoSize = true;
+            searchLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            searchLabel.Location = new Point(159, 265);
+            searchLabel.Name = "searchLabel";
+            searchLabel.Size = new Size(71, 25);
+            searchLabel.TabIndex = 10;
+            searchLabel.Text = "Поиск";
+            // 
+            // searchDestinationLabel
+            // 
+            searchDestinationLabel.AutoSize = true;
+            searchDestinationLabel.Location = new Point(76, 360);
+            searchDestinationLabel.Name = "searchDestinationLabel";
+            searchDestinationLabel.Size = new Size(110, 15);
+            searchDestinationLabel.TabIndex = 9;
+            searchDestinationLabel.Text = "Пункт назначения:";
+            // 
+            // searchDateTimeLabel
+            // 
+            searchDateTimeLabel.AutoSize = true;
+            searchDateTimeLabel.Location = new Point(68, 331);
+            searchDateTimeLabel.Name = "searchDateTimeLabel";
+            searchDateTimeLabel.Size = new Size(118, 15);
+            searchDateTimeLabel.TabIndex = 8;
+            searchDateTimeLabel.Text = "Дата и время после:";
+            // 
+            // searchFlightIdLabel
+            // 
+            searchFlightIdLabel.AutoSize = true;
+            searchFlightIdLabel.Location = new Point(132, 302);
+            searchFlightIdLabel.Name = "searchFlightIdLabel";
+            searchFlightIdLabel.Size = new Size(54, 15);
+            searchFlightIdLabel.TabIndex = 7;
+            searchFlightIdLabel.Text = "Flight ID:";
+            // 
+            // searchFlightIdTextBox
+            // 
+            searchFlightIdTextBox.Location = new Point(192, 299);
+            searchFlightIdTextBox.Name = "searchFlightIdTextBox";
+            searchFlightIdTextBox.Size = new Size(200, 23);
+            searchFlightIdTextBox.TabIndex = 6;
+            // 
+            // searchDateTimePicker
+            // 
+            searchDateTimePicker.Location = new Point(192, 328);
+            searchDateTimePicker.Name = "searchDateTimePicker";
+            searchDateTimePicker.Size = new Size(200, 23);
+            searchDateTimePicker.TabIndex = 5;
+            // 
+            // searchButton
+            // 
+            searchButton.Location = new Point(6, 386);
+            searchButton.Name = "searchButton";
+            searchButton.Size = new Size(386, 33);
+            searchButton.TabIndex = 4;
+            searchButton.Text = "Искать";
+            searchButton.UseVisualStyleBackColor = true;
+            searchButton.Click += searchButton_Click;
+            // 
+            // searchDestinationTextBox
+            // 
+            searchDestinationTextBox.Location = new Point(192, 357);
+            searchDestinationTextBox.Name = "searchDestinationTextBox";
+            searchDestinationTextBox.Size = new Size(200, 23);
+            searchDestinationTextBox.TabIndex = 3;
             // 
             // fileLoadButton
             // 
@@ -112,17 +197,17 @@
             outputTextBox.Location = new Point(6, 22);
             outputTextBox.Name = "outputTextBox";
             outputTextBox.ReadOnly = true;
-            outputTextBox.Size = new Size(386, 409);
+            outputTextBox.Size = new Size(386, 240);
             outputTextBox.TabIndex = 0;
             outputTextBox.Text = "";
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(390, 503);
+            refreshButton.Location = new Point(6, 482);
             refreshButton.Name = "refreshButton";
-            refreshButton.Size = new Size(398, 48);
+            refreshButton.Size = new Size(386, 51);
             refreshButton.TabIndex = 2;
-            refreshButton.Text = "Обновить";
+            refreshButton.Text = "Показать все рейсы";
             refreshButton.UseVisualStyleBackColor = true;
             refreshButton.Click += refreshButton_Click;
             // 
@@ -426,7 +511,6 @@
             Controls.Add(companyNameLabel);
             Controls.Add(flightIdLabel);
             Controls.Add(flightIdTextBox);
-            Controls.Add(refreshButton);
             Controls.Add(outputGroupBox);
             MaximizeBox = false;
             MaximumSize = new Size(1100, 600);
@@ -435,6 +519,7 @@
             Text = "Form1";
             Load += Form1_Load;
             outputGroupBox.ResumeLayout(false);
+            outputGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)priceNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)planeSpecNumericUpDown).EndInit();
@@ -484,5 +569,13 @@
         private SaveFileDialog eventLogSaveFileDialog;
         private Label replaceIdLabel;
         private TextBox replaceIdTextBox;
+        private TextBox searchFlightIdTextBox;
+        private DateTimePicker searchDateTimePicker;
+        private Button searchButton;
+        private TextBox searchDestinationTextBox;
+        private Label searchFlightIdLabel;
+        private Label searchLabel;
+        private Label searchDestinationLabel;
+        private Label searchDateTimeLabel;
     }
 }

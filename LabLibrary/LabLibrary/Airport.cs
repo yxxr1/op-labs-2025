@@ -144,6 +144,21 @@ namespace LabLibrary
                 text += plane.GetText() + "\n\n";
             }
         }
+        public void GetText(ref string text, SearchParams searchParams)
+        {
+            for (int i = 0; i < this.Planes.Count; i++)
+            {
+                Plane plane = this.Planes[i];
+                bool checkFlightId = searchParams.flightId == "" || plane.FlightId == searchParams.flightId;
+                bool checkDateTime = plane.DepartureDateTime.CompareTo(searchParams.dateTime) > 0;
+                bool checkDestination = searchParams.destination == "" || plane.Destination == searchParams.destination;
+
+                if (checkFlightId && checkDateTime && checkDestination)
+                {
+                    text += plane.GetText() + "\n\n";
+                }
+            }
+        }
 
         public delegate void AirportEvent(string message);
         public event AirportEvent Event;

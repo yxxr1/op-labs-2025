@@ -30,17 +30,23 @@ namespace Lab
             {
                 StreamWriter writer = new StreamWriter(eventLogSaveFileDialog.FileName, true);
 
-                writer.WriteLine("["+ DateTime.Now.ToString() + "] " + airportMessage);
+                writer.WriteLine("[" + DateTime.Now.ToString() + "] " + airportMessage);
 
                 writer.Close();
             }
         }
 
-        private void outputFlights()
+        private void outputFlights(SearchParams? searchParams = null)
         {
             string text = "";
 
-            this.Airport.GetText(ref text);
+            if (searchParams == null)
+            {
+                this.Airport.GetText(ref text);
+            } else
+            {
+                this.Airport.GetText(ref text, (SearchParams)searchParams);
+            }
 
             outputTextBox.Text = text;
             outputTextBox.ForeColor = Airport.OutputColor;
@@ -190,7 +196,7 @@ namespace Lab
                 this.cargoTypeRadioButton.Enabled = false;
                 this.replaceIdTextBox.Enabled = false;
                 this.resetDataBindings();
-                this.clearForm();
+                this.replaceIdTextBox.Text = "";
 
                 Plane selectedItem = Airport[this.editListBox.SelectedIndex];
 
@@ -261,6 +267,13 @@ namespace Lab
             {
                 eventLogButton.ForeColor = Color.Green;
             }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            SearchParams searchParams = new() { flightId = searchFlightIdTextBox.Text, dateTime = searchDateTimePicker.Value, destination = searchDestinationTextBox.Text };
+
+            outputFlights(searchParams);
         }
     }
 }
