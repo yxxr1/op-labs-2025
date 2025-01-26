@@ -5,14 +5,32 @@ namespace LabLibrary
 {
     public class Airport: ICommunicaion
     {
+        // свойство из интерфейса ICommunication
         public string Name { get => "Airport"; }
- 
+
+        // коллекция самолетов
         public List<Plane> Planes = new List<Plane>();
+
+        // индексатор по индексу в коллекции самолетов
         public Plane this[int index]
         {
             get => Planes[index];
-            set => Planes.Insert(index, value);
+            set
+            {
+                if (index < Planes.Count)
+                {
+                    Plane oldPlane = Planes[index];
+                    Planes.Insert(index, value);
+                    value.OnAddToAirport(this);
+                    // отправка сообщения самолету с количеством самолетов в аэропорту
+                    value.ReceiveMessage(this, "Самолетов в аэропорту: " + Planes.Count);
+                    // вызов события
+                    Event.Invoke("Рейс " + oldPlane.FlightId + " был перезаписан рейсом " + value.FlightId);
+                }
+            }
         }
+
+        // индексатор по flightId в коллекции самолетов
         public Plane? this[string flightId]
         {
             get
@@ -21,6 +39,7 @@ namespace LabLibrary
                 {
                     if (Planes[i].FlightId == flightId)
                     {
+                        // возвращает самолет с указанным flightId
                         return this.Planes[i];
                     }
                 }
@@ -35,21 +54,28 @@ namespace LabLibrary
                     {
                         if (Planes[i].FlightId == flightId)
                         {
+                            // замена самолета с указанным flightId
                             this.Planes[i] = value;
+                            // вызов метода самолета на добавление в аэропорт
                             value.OnAddToAirport(this);
+                            // отправка сообщения самолету с количеством самолетов в аэропорту
                             value.ReceiveMessage(this, "Самолетов в аэропорту: " + Planes.Count);
+                            // вызов события
                             Event.Invoke("Рейс " + flightId + " был перезаписан рейсом " + value.FlightId);
                             return;
                         }
                     }
 
+                    // вызов события - рейс не найден
                     Event.Invoke("Не удалось перезаписать рейс " + flightId + ", т.к. он не существует");
                 }
             }
         }
 
+        // цвет для вывода в UI
         public static readonly Color OutputColor;
 
+        // статический конструктор инициализирует OutputColor в зависимости от дня недели
         static Airport()
         {
             DateTime now = DateTime.Now;
@@ -64,6 +90,7 @@ namespace LabLibrary
             }
         }
 
+        // метод добавления самолета в аэропорт
         public void AddPlane(Plane plane)
         {
             Planes.Add(plane);
@@ -72,14 +99,18 @@ namespace LabLibrary
             plane.ReceiveMessage(this, "Самолетов в аэропорту: " + Planes.Count);
         }
 
+        // метод чтения сохраненных данных изщ файла
         public void ReadFromFile(OpenFileDialog dialog)
         {
+            // выбор файла
             if (dialog.ShowDialog() != DialogResult.Cancel) {
                 this.Planes.Clear();
                 StreamReader reader = new StreamReader(dialog.FileName);
                 Event.Invoke("Данные рейсов загружаются из файла " + dialog.FileName);
 
+                // чтение до конца файла
                 while (!reader.EndOfStream) {
+                    // каждая строка - поле самолета
                     string? flightId = reader.ReadLine();
                     string? companyName = reader.ReadLine();
                     string? destination = reader.ReadLine();
@@ -90,6 +121,7 @@ namespace LabLibrary
                     string? spec = reader.ReadLine();
 
                     if (type != null && flightId != null && companyName != null && destination != null && dateTime != null && price != null && spec != null && photo != null) {
+                        // выбор класса самолета в зависимости от типа
                         if (type == "Passenger")
                         {
                             PassengerPlane plane = new PassengerPlane(flightId, companyName, destination, DateTime.Parse(dateTime), Int32.Parse(price), Int32.Parse(spec), photo);
@@ -107,6 +139,8 @@ namespace LabLibrary
                 Event.Invoke("Конец загрузки из файла");
             }
         }
+
+        // перегруженный метод записи данных приложения в файл
         public void WriteToFile(SaveFileDialog dialog)
         {
             if (dialog.ShowDialog() != DialogResult.Cancel)
@@ -114,14 +148,18 @@ namespace LabLibrary
                 StreamWriter writer = new StreamWriter(dialog.FileName);
 
                 for (int i = 0; i < this.Planes.Count; i++) {
+                    // в файл записывается свойство Serialized объекта
                     writer.WriteLine(this.Planes[i].Serialized);
                 }
 
                 writer.Close();
 
+                // вызов события
                 Event.Invoke("Данные аэропорта " + Name + " выгружены в файл " + dialog.FileName);
             }
         }
+
+        // версия, принимающая имя файла как строку
         public void WriteToFile(string fileName)
         {
             StreamWriter writer = new StreamWriter(fileName);
@@ -136,6 +174,7 @@ namespace LabLibrary
             Event.Invoke("Данные аэропорта " + Name + " выгружены в файл " + fileName);
         }
 
+        // перегруженный метод для получения текста по всем рейсам в аэропорту
         public void GetText(ref string text)
         {
             for (int i = 0; i < this.Planes.Count; i++)
@@ -144,6 +183,8 @@ namespace LabLibrary
                 text += plane.GetText() + "\n\n";
             }
         }
+
+        // версия метода с поиском по рейсам
         public void GetText(ref string text, SearchParams searchParams)
         {
             for (int i = 0; i < this.Planes.Count; i++)
@@ -160,9 +201,11 @@ namespace LabLibrary
             }
         }
 
+        // события аэропорта
         public delegate void AirportEvent(string message);
         public event AirportEvent Event;
 
+        // метод из ICommunication
         public void ReceiveMessage(ICommunicaion sender, string message)
         {
             Event.Invoke("Получено сообщение от \"" + sender.Name + "\": " + message);

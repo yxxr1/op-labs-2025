@@ -9,21 +9,27 @@ namespace Lab
         {
             InitializeComponent();
 
+            // создание объекта аэропорта
             this.Airport = new Airport();
+            // назначение обработчиков событий
             Airport.Event += ShowLog;
             Airport.Event += WriteLogToFile;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // привязка списка самолетов к ListBox
             editListBox.DataSource = this.Airport.Planes;
             editListBox.DisplayMember = "FlightId";
         }
 
+        // вывод текста события в UI
         private void ShowLog(string airportMessage)
         {
             eventTextBox.Text += airportMessage + "\n";
         }
+
+        // запись лога в файл, если он выбран
         private void WriteLogToFile(string airportMessage)
         {
             if (eventLogSaveFileDialog.FileName != "")
@@ -36,10 +42,12 @@ namespace Lab
             }
         }
 
+        // вывод рейсов аэропорта в UI
         private void outputFlights(SearchParams? searchParams = null)
         {
             string text = "";
 
+            // вызов нужной версии метода
             if (searchParams == null)
             {
                 this.Airport.GetText(ref text);
@@ -49,12 +57,15 @@ namespace Lab
             }
 
             outputTextBox.Text = text;
+            // цвет текста инициализируется в статическом конструкторе аэропорта
             outputTextBox.ForeColor = Airport.OutputColor;
 
             editListBox.DataSource = null;
             editListBox.DataSource = this.Airport.Planes;
             editListBox.DisplayMember = "FlightId";
         }
+
+        // очистка формы
         private void clearForm()
         {
             this.flightIdTextBox.Text = "";
@@ -70,19 +81,24 @@ namespace Lab
             this.replaceIdTextBox.Text = "";
         }
 
+        // обработчик кнопки "Показать все рейсы"
         private void refreshButton_Click(object sender, EventArgs e)
         {
             this.outputFlights();
         }
 
+        // обработчик кнопки "Добавить рейс"
         private void addFlightButton_Click(object sender, EventArgs e)
         {
+            // проверка заполнения обязательных полей
             if (this.destinationTextBox.Text != "" && this.photoOpenFileDialog.FileName != "")
             {
                 Plane plane;
 
+                // вызов нужного конструктора
                 if (this.flightIdTextBox.Text != "" && this.companyNameTextBox.Text != "")
                 {
+                    // выбор нужного класса в зависимости от чекбокса "Тип самолета"
                     if (passengerTypeRadioButton.Checked)
                     {
                         plane = new PassengerPlane(
@@ -132,6 +148,7 @@ namespace Lab
                     }
                 }
 
+                // если поле "ID для замены" заполнено - рейс с указанным id перезаписывается с помощью индексатора
                 if (replaceIdTextBox.Text != "")
                 {
                     Airport[replaceIdTextBox.Text] = plane;
@@ -146,6 +163,7 @@ namespace Lab
             }
         }
 
+        // очистка привязки данных к полям формы
         private void resetDataBindings()
         {
             this.flightIdTextBox.DataBindings.Clear();
@@ -156,6 +174,7 @@ namespace Lab
             this.planeSpecNumericUpDown.DataBindings.Clear();
         }
 
+        // установка привязки данных переданного объекта к полям формы для PassengerPlane
         private void setDataBindings(PassengerPlane item)
         {
             this.flightIdTextBox.DataBindings.Add("Text", item, "FlightId");
@@ -165,6 +184,7 @@ namespace Lab
             this.priceNumericUpDown.DataBindings.Add("Value", item, "FlightPrice");
             this.planeSpecNumericUpDown.DataBindings.Add("Value", item, "MaxPassengers");
         }
+        // версия метода для CargoPlane
         private void setDataBindings(CargoPlane item)
         {
             this.flightIdTextBox.DataBindings.Add("Text", item, "FlightId");
@@ -175,6 +195,7 @@ namespace Lab
             this.planeSpecNumericUpDown.DataBindings.Add("Value", item, "MaxWeight");
         }
 
+        // обработчик кнопки "Сброс"
         private void resetButton_Click(object sender, EventArgs e)
         {
             this.resetDataBindings();
@@ -186,10 +207,13 @@ namespace Lab
             this.replaceIdTextBox.Enabled = true;
         }
 
+        // обработчик кнопки "Редактировать"
         private void editButton_Click(object sender, EventArgs e)
         {
+            // проверка что элемент выбран
             if (this.editListBox.SelectedItem != null)
             {
+                // отклочение не нужных для редактирования полей
                 this.addFlightButton.Enabled = false;
                 this.photoButton.Enabled = false;
                 this.passengerTypeRadioButton.Enabled = false;
@@ -198,8 +222,10 @@ namespace Lab
                 this.resetDataBindings();
                 this.replaceIdTextBox.Text = "";
 
+                // получение выбранного элемента через индексатор аэропорта
                 Plane selectedItem = Airport[this.editListBox.SelectedIndex];
 
+                // вызов нужной версии setDataBindings
                 if (selectedItem.Type == "Passenger")
                 {
                     this.passengerTypeRadioButton.Checked = true;
@@ -211,23 +237,28 @@ namespace Lab
                     this.setDataBindings((CargoPlane)selectedItem);
                 }
 
+                // вывод фото самолета
                 selectedItem.ShowPhoto(this.pictureBox);
             }
         }
 
+        // обработчик кнопки "Выбрать фото"
         private void photoButton_Click(object sender, EventArgs e)
         {
             if (this.photoOpenFileDialog.ShowDialog() != DialogResult.Cancel)
             {
+                // если выбрано - текст кнопки меняется цвет
                 this.photoButton.ForeColor = Color.Green;
             }
         }
 
+        // обработчик кнопки "Сохранить в файл"
         private void fileSaveButton_Click(object sender, EventArgs e)
         {
             this.Airport.WriteToFile(this.saveFileDialog);
         }
 
+        // обработчик кнопки "Загрузить из файла"
         private void fileLoadButton_Click(object sender, EventArgs e)
         {
             this.Airport.ReadFromFile(this.openFileDialog);
@@ -235,6 +266,7 @@ namespace Lab
             this.clearForm();
         }
 
+        // переключение на нужный Label в UI для поля спецификации самолета при изменении типа самолета
         private void passengerTypeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             this.planeSpecCargoLabel.Visible = false;
@@ -247,32 +279,40 @@ namespace Lab
             this.planeSpecCargoLabel.Visible = true;
         }
 
+        // обработчик кнопки "Выбрать шрифт"
         private void fontButton_Click(object sender, EventArgs e)
         {
             fontDialog.ShowDialog();
         }
 
+        // при изменении выбранного элемента в ListBox - отрисовка FlightId в PictureBox
         private void editListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.editListBox.SelectedItem != null)
             {
+                // получение выбранного элемента через индексатор аэропорта
                 Plane selectedItem = Airport[this.editListBox.SelectedIndex];
                 selectedItem.DrawFlightId(pictureBox, fontDialog.Font);
             }
         }
 
+        // обработчик кнопки "Выбрать файл для лога"
         private void eventLogButton_Click(object sender, EventArgs e)
         {
             if (eventLogSaveFileDialog.ShowDialog() != DialogResult.Cancel)
             {
+                // если выбрано - текст кнопки меняется цвет
                 eventLogButton.ForeColor = Color.Green;
             }
         }
 
+        // обработчик кнопки "Искать"
         private void searchButton_Click(object sender, EventArgs e)
         {
+            // создание структуры SearchParams
             SearchParams searchParams = new() { flightId = searchFlightIdTextBox.Text, dateTime = searchDateTimePicker.Value, destination = searchDestinationTextBox.Text };
 
+            // вызов версии outputFlights с параметрами поиска
             outputFlights(searchParams);
         }
     }
