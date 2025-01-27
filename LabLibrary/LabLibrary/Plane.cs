@@ -1,7 +1,7 @@
 ﻿namespace LabLibrary
 {
     // абстрактный класс для всех самолетов
-    abstract public class Plane: ICommunicaion
+    abstract public class Plane: ICommunication
     {
         // тип самолета, переопределяется в наследнике
         virtual public string Type
@@ -40,7 +40,7 @@
         // свойство из интерфейса ICommunication
         public string Name { get => "Рейс " + FlightId; }
         // полученные самолетом сообщения
-        private string receivedMessages = "";
+        public List<string> ReceivedMessages { get; private set; }
         // свойство для записи в файл
         public virtual string Serialized {
             get => FlightId + "\n" + CompanyName + "\n" + Destination + "\n" + DepartureDateTime.ToString() + "\n" + FlightPrice + "\n" + photoFile;
@@ -56,8 +56,15 @@
                 daysLeftText = " (осталось " + daysLeft + " д.)" ;
             }
 
+            string messages = "";
+
+            for (int i = 0; i < ReceivedMessages.Count; i++)
+            {
+                messages += ReceivedMessages[i];
+            }
+
             return String.Format("Рейс \"{0}\" компании \"{1}\":\nПункт назначения: {2}\nДата и время отправления: {3}{4}\nСтоимость: {5}\nПолученные сообщения:\n{6}",
-                FlightId, CompanyName, Destination, DepartureDateTime.ToString(), daysLeftText, FlightPrice, receivedMessages);
+                FlightId, CompanyName, Destination, DepartureDateTime.ToString(), daysLeftText, FlightPrice, messages);
         }
 
         // конструктор со всеми полями
@@ -69,6 +76,7 @@
             this.DepartureDateTime = dateTime;
             this.FlightPrice = price;
             this.photoFile = photo;
+            ReceivedMessages = new List<string>();
         }
         // перегруженный конструктор, FlightId и CompanyName генерируются автоматически
         public Plane(string destination, DateTime dateTime, int price, string photo)
@@ -79,6 +87,7 @@
             this.DepartureDateTime = dateTime;
             this.FlightPrice = price;
             this.photoFile = photo;
+            ReceivedMessages = new List<string>();
         }
         // вызывается при добавлении в аэропорт
         public void OnAddToAirport(Airport airport)
@@ -121,9 +130,9 @@
         }
 
         // метод из ICommunication
-        public void ReceiveMessage(ICommunicaion sender, string message)
+        public void ReceiveMessage(ICommunication sender, string message)
         {
-            receivedMessages += "Сообщение от \"" + sender.Name + "\": " + message + "\n";
+            ReceivedMessages.Add("Сообщение от \"" + sender.Name + "\": " + message + "\n");
         }
     }
 }

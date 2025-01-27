@@ -1,9 +1,6 @@
-﻿using System.Drawing;
-using System.Numerics;
-
-namespace LabLibrary
+﻿namespace LabLibrary
 {
-    public class Airport: ICommunicaion
+    public class Airport: ICommunication
     {
         // свойство из интерфейса ICommunication
         public string Name { get => "Airport"; }
@@ -75,6 +72,8 @@ namespace LabLibrary
         // цвет для вывода в UI
         public static readonly Color OutputColor;
 
+        public List<string> ReceivedMessages { get; private set; }
+
         // статический конструктор инициализирует OutputColor в зависимости от дня недели
         static Airport()
         {
@@ -88,6 +87,10 @@ namespace LabLibrary
             {
                 Airport.OutputColor = Color.Green;
             }
+        }
+        public Airport()
+        {
+            ReceivedMessages = new List<string>();
         }
 
         // метод добавления самолета в аэропорт
@@ -206,9 +209,11 @@ namespace LabLibrary
         public event AirportEvent Event;
 
         // метод из ICommunication
-        public void ReceiveMessage(ICommunicaion sender, string message)
+        public void ReceiveMessage(ICommunication sender, string message)
         {
-            Event.Invoke("Получено сообщение от \"" + sender.Name + "\": " + message);
+            string messageText = "Получено сообщение от \"" + sender.Name + "\": " + message;
+            Event.Invoke(messageText);
+            ReceivedMessages.Add(messageText);
         }
     }
 }

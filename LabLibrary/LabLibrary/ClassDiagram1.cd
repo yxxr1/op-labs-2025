@@ -10,7 +10,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAQAICAAAAAQAAiAAAABEAAIAAAAAAAA=</HashCode>
+      <HashCode>AEAAAAAAAAAAAQAICAAAAAQAAiAAAABECAIAAAAAAAA=</HashCode>
       <FileName>Airport.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -21,7 +21,7 @@
   <Class Name="LabLibrary.Plane">
     <Position X="10.25" Y="5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>ACAAQAAAAAiAAiAsQAIAAIQABChAAAAEAQAABAAAAAg=</HashCode>
+      <HashCode>ACAAQAAAAAiAAiAMQAIAAIQABChAAAAECQAABAAAAAg=</HashCode>
       <FileName>Plane.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
